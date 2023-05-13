@@ -14,4 +14,10 @@ export const deviceService = Object.assign(orm.device, {
 
     return devices.map((device) => new DeviceInstance(device).apiFormat);
   },
+
+  deleteOne: async (deviceId: string) => {
+    const deletedDevice = await orm.device.delete({ where: { device_id: deviceId } });
+
+    return new DeviceInstance(deletedDevice).apiFormat;
+  },
 });
