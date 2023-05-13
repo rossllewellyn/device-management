@@ -1,5 +1,6 @@
 import { Type as T } from "@sinclair/typebox";
 import { FastifyPluginAsync } from "fastify";
+import { devicesRoutes } from "./devices/devices-routes";
 
 export const routesIndex: FastifyPluginAsync = async (app) => {
   const config = { schema: { response: { 200: T.String() } } };
@@ -8,7 +9,5 @@ export const routesIndex: FastifyPluginAsync = async (app) => {
     res.status(200).send("Looking healthy!");
   });
 
-  app.register(async (app) => {
-    // TODO: add routes
-  });
+  app.register(devicesRoutes, { prefix: "devices" });
 };
