@@ -12,7 +12,7 @@ datasource db {
 
 model Device {
   device_id              String   @id @unique
-  device_status_code     String   @default("NEW")
+  device_status_code     DeviceStatusCode @default(NEW)
   tenant_id              String?
   device_make            String?
   device_model           String?
@@ -27,4 +27,11 @@ model Device {
   last_updated_ip        String?
 
   @@map(name: "devices")
+}
+
+enum DeviceStatusCode {
+  NEW
+  USED
+  REFURBISHED
+  BROKEN
 }
