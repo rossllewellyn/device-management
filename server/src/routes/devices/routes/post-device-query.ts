@@ -1,8 +1,8 @@
 import { FastifyPluginAsync } from "fastify";
 import {
-  DeviceQueryBody,
-  deviceQueryBody,
-  deviceQueryResponse,
+  PostDeviceQueryBody,
+  postDeviceQueryBody,
+  postDeviceQueryResponse,
   PostDeviceQueryRoute,
 } from "../types/post-device-query-types";
 import { deviceService } from "../../../services/devices/device-service";
@@ -12,8 +12,8 @@ export const postDeviceQueryRoute: FastifyPluginAsync = async (app) => {
     "/query",
     {
       schema: {
-        body: deviceQueryBody,
-        response: { 200: deviceQueryResponse },
+        body: postDeviceQueryBody,
+        response: { 200: postDeviceQueryResponse },
       },
     },
     async (req, res) => {
@@ -24,7 +24,7 @@ export const postDeviceQueryRoute: FastifyPluginAsync = async (app) => {
   );
 };
 
-export const postDeviceQuery = async (body: DeviceQueryBody) => {
+export const postDeviceQuery = async (body: PostDeviceQueryBody) => {
   return deviceService.findManyFull({
     where: {
       OR: [
