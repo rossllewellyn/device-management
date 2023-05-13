@@ -9,3 +9,22 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Device {
+  device_id              String   @id @unique
+  device_status_code     String   @default("NEW")
+  tenant_id              String?
+  device_make            String?
+  device_model           String?
+  device_activation_code String   @default(dbgenerated("floor(random() * 89999 + 10000)::text"))
+  device_os_version      String?
+  device_settings_json   Json?
+  device_projects_json   Json?
+  app_identifier         String?
+  app_version            String?
+  created_datetime       DateTime @default(now())
+  last_updated_datetime  DateTime @updatedAt
+  last_updated_ip        String?
+
+  @@map(name: "devices")
+}
