@@ -8,4 +8,10 @@ export const deviceService = Object.assign(orm.device, {
 
     return new DeviceInstance(newDevice).apiFormat;
   },
+
+  findManyFull: async <T extends Prisma.DeviceFindManyArgs>(findManyArgs: T) => {
+    const devices = await orm.device.findMany(findManyArgs);
+
+    return devices.map((device) => new DeviceInstance(device).apiFormat);
+  },
 });
