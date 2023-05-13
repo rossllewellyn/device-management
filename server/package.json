@@ -4,9 +4,18 @@
   "description": "Server for the Device Management application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx tsc",
+    "start": "nodemon ./src/index.ts"
   },
   "keywords": [],
   "author": "Ross Llewellyn",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^4.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.1.3",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1"
+  }
 }
