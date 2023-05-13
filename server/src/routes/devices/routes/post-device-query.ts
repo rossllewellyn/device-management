@@ -25,7 +25,7 @@ export const postDeviceQueryRoute: FastifyPluginAsync = async (app) => {
 };
 
 export const postDeviceQuery = async (body: PostDeviceQueryBody) => {
-  return deviceService.findManyFull({
+  return await deviceService.findManyFull({
     where: {
       OR: [
         { device_id: { contains: body.search_text } },
