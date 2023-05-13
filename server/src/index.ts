@@ -1,6 +1,9 @@
 import fastify from "fastify";
+import { routesIndex } from "./routes/routes-index";
 
 const app = fastify();
+
+app.register(routesIndex);
 
 (async () => {
   try {
