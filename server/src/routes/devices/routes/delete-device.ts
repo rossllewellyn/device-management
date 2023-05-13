@@ -24,5 +24,5 @@ export const deleteDeviceRoute: FastifyPluginAsync = async (app) => {
 };
 
 export const deleteDevice = async (deviceId: string) => {
-  return await deviceService.deleteOne({ where: { device_id: deviceId } });
+  return await deviceService.deleteFull({ where: { device_id: deviceId } });
 };

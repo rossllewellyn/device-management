@@ -3,7 +3,7 @@ import { orm } from "../orm";
 import { DeviceInstance } from "./device-instance";
 
 export const deviceService = Object.assign(orm.device, {
-  createNew: async <T extends Prisma.DeviceCreateArgs>(createArgs: T) => {
+  createFull: async <T extends Prisma.DeviceCreateArgs>(createArgs: T) => {
     const newDevice = await orm.device.create(createArgs);
 
     return new DeviceInstance(newDevice).apiFormat;
@@ -15,13 +15,13 @@ export const deviceService = Object.assign(orm.device, {
     return devices.map((device) => new DeviceInstance(device).apiFormat);
   },
 
-  deleteOne: async <T extends Prisma.DeviceDeleteArgs>(deleteArgs: T) => {
+  deleteFull: async <T extends Prisma.DeviceDeleteArgs>(deleteArgs: T) => {
     const deletedDevice = await orm.device.delete(deleteArgs);
 
     return new DeviceInstance(deletedDevice).apiFormat;
   },
 
-  updateOne: async <T extends Prisma.DeviceUpdateArgs>(updateArgs: T) => {
+  updateFull: async <T extends Prisma.DeviceUpdateArgs>(updateArgs: T) => {
     const updatedDevice = await orm.device.update(updateArgs);
 
     return new DeviceInstance(updatedDevice).apiFormat;

@@ -27,5 +27,5 @@ export const patchDeviceRoute: FastifyPluginAsync = async (app) => {
 export const patchDevice = async (body: PatchDeviceBody) => {
   const { device_id: deviceId, ...updateFields } = body;
 
-  return await deviceService.updateOne({ where: { device_id: deviceId }, data: updateFields });
+  return await deviceService.updateFull({ where: { device_id: deviceId }, data: updateFields });
 };

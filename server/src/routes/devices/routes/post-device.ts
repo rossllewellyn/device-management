@@ -25,5 +25,5 @@ export const postDeviceRoute: FastifyPluginAsync = async (app) => {
 };
 
 export const postDevice = async (body: PostDeviceBody) => {
-  return await deviceService.createNew({ data: body });
+  return await deviceService.createFull({ data: body });
 };
