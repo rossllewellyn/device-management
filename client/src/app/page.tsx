@@ -6,6 +6,7 @@ import EditDeviceForm from "./edit-device-form";
 import AddDeviceForm from "./add-device-form";
 import { deleteDevice, postDeviceQuery } from "@/api";
 import { PostDeviceQueryResponse } from "../../../server/src/routes/devices/types/post-device-query-types";
+import { PostDeviceResponse } from "../../../server/src/routes/devices/types/post-device-types";
 
 enum AppMode {
   VIEWING,
@@ -17,6 +18,7 @@ export default function Home() {
   const [appMode, setAppMode] = useState<AppMode>(AppMode.VIEWING);
   const [searchText, setSearchText] = useState<string>("");
   const [deviceList, setDeviceList] = useState<PostDeviceQueryResponse>([]);
+  const [deviceToEdit, setDeviceToEdit] = useState<PostDeviceResponse | undefined>(undefined);
 
   const getDevices = async () => {
     const devices = await postDeviceQuery({ search_text: searchText });
@@ -38,7 +40,7 @@ export default function Home() {
 
       {appMode === AppMode.VIEWING && (
         <div className={styles.viewing}>
-          <button onClick={() => setAppMode(AppMode.VIEWING)}>Add Device</button>
+          <button onClick={() => setAppMode(AppMode.ADDING)}>Add Device</button>
           <div>
             <input
               placeholder="Search for devices ..."
@@ -54,12 +56,21 @@ export default function Home() {
                 <h3>Model: {device.device_model}</h3>
                 <h3>OS: {device.device_os_version}</h3>
                 <button onClick={() => removeDevice(device.device_id)}>Remove</button>
+                <button
+                  onClick={() => {
+                    // these are batched together
+                    setAppMode(AppMode.EDITING);
+                    setDeviceToEdit(device);
+                  }}
+                >
+                  Edit Device
+                </button>
               </div>
             );
           })}
         </div>
       )}
-      {appMode === AppMode.EDITING && <EditDeviceForm />}
+      {appMode === AppMode.EDITING && deviceToEdit && <EditDeviceForm device={deviceToEdit} />}
       {appMode === AppMode.ADDING && <AddDeviceForm />}
     </main>
   );
