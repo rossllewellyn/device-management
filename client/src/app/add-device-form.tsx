@@ -1,5 +1,5 @@
 const AddDeviceForm = () => {
-  return <></>;
+  return <>Add Device</>;
 };
 
 export default AddDeviceForm;

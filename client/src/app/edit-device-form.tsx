@@ -1,5 +1,5 @@
 const EditDeviceForm = () => {
-  return <></>;
+  return <>Edit Device</>;
 };
 
 export default EditDeviceForm;
