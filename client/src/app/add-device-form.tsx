@@ -1,3 +1,5 @@
+import { AppMode } from "./page";
+
 const AddDeviceForm = ({
   addDevice,
   setAppMode,
@@ -5,7 +7,11 @@ const AddDeviceForm = ({
   addDevice: Function;
   setAppMode: Function;
 }) => {
-  return <>Add Device</>;
+  return (
+    <>
+      <button onClick={() => setAppMode(AppMode.VIEWING)}>Cancel</button>
+    </>
+  );
 };
 
 export default AddDeviceForm;

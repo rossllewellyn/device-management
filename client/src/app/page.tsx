@@ -12,7 +12,7 @@ import {
 } from "../../../server/src/routes/devices/types/post-device-types";
 import { PatchDeviceBody } from "../../../server/src/routes/devices/types/patch-device-types";
 
-enum AppMode {
+export enum AppMode {
   VIEWING,
   EDITING,
   ADDING,

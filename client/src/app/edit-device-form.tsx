@@ -1,4 +1,5 @@
 import { PostDeviceResponse } from "../../../server/src/routes/devices/types/post-device-types";
+import { AppMode } from "./page";
 
 const EditDeviceForm = ({
   device,
@@ -9,7 +10,11 @@ const EditDeviceForm = ({
   editDevice: Function;
   setAppMode: Function;
 }) => {
-  return <>Edit Device</>;
+  return (
+    <>
+      <button onClick={() => setAppMode(AppMode.VIEWING)}>Cancel</button>
+    </>
+  );
 };
 
 export default EditDeviceForm;
