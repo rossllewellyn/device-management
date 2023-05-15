@@ -8,6 +8,10 @@ import {
   PostDeviceBody,
   PostDeviceResponse,
 } from "../../server/src/routes/devices/types/post-device-types";
+import {
+  PatchDeviceBody,
+  PatchDeviceResponse,
+} from "../../server/src/routes/devices/types/patch-device-types";
 
 const baseURL = "http://localhost:3100";
 
@@ -45,5 +49,13 @@ export const postDevice = async (body: PostDeviceBody) => {
   const method = "POST";
 
   const response: PostDeviceResponse = await fetchFactory(url, method, body);
+  return response;
+};
+
+export const patchDevice = async (body: PatchDeviceBody) => {
+  const url = `${baseURL}/devices`;
+  const method = "PATCH";
+
+  const response: PatchDeviceResponse = await fetchFactory(url, method, body);
   return response;
 };
