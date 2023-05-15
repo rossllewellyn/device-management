@@ -4,9 +4,13 @@ import { useState } from "react";
 import styles from "./page.module.css";
 import EditDeviceForm from "./edit-device-form";
 import AddDeviceForm from "./add-device-form";
-import { deleteDevice, postDeviceQuery } from "@/api";
+import { deleteDevice, postDeviceQuery, postDevice, patchDevice } from "@/api";
 import { PostDeviceQueryResponse } from "../../../server/src/routes/devices/types/post-device-query-types";
-import { PostDeviceResponse } from "../../../server/src/routes/devices/types/post-device-types";
+import {
+  PostDeviceBody,
+  PostDeviceResponse,
+} from "../../../server/src/routes/devices/types/post-device-types";
+import { PatchDeviceBody } from "../../../server/src/routes/devices/types/patch-device-types";
 
 enum AppMode {
   VIEWING,
@@ -24,6 +28,21 @@ export default function Home() {
     const devices = await postDeviceQuery({ search_text: searchText });
     if (!devices) return; // TODO: add handling for this
     setDeviceList(devices);
+  };
+
+  const addDevice = async (body: PostDeviceBody) => {
+    const newDevice = await postDevice(body);
+    if (!newDevice) return;
+
+    setDeviceList([...deviceList, newDevice]);
+  };
+
+  const editDevice = async (body: PatchDeviceBody) => {
+    const updatedDevice = await patchDevice(body);
+    if (!updatedDevice) return;
+
+    const filteredDeviceList = deviceList.filter((device) => device.device_id !== body.device_id);
+    setDeviceList([...filteredDeviceList, updatedDevice]);
   };
 
   const removeDevice = async (deviceId: string) => {
@@ -70,8 +89,12 @@ export default function Home() {
           })}
         </div>
       )}
-      {appMode === AppMode.EDITING && deviceToEdit && <EditDeviceForm device={deviceToEdit} />}
-      {appMode === AppMode.ADDING && <AddDeviceForm />}
+      {appMode === AppMode.EDITING && deviceToEdit && (
+        <EditDeviceForm device={deviceToEdit} editDevice={editDevice} setAppMode={setAppMode} />
+      )}
+      {appMode === AppMode.ADDING && (
+        <AddDeviceForm addDevice={addDevice} setAppMode={setAppMode} />
+      )}
     </main>
   );
 }
