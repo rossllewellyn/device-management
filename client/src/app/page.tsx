@@ -32,14 +32,14 @@ export default function Home() {
 
   const addDevice = async (body: PostDeviceBody) => {
     const newDevice = await postDevice(body);
-    if (!newDevice) return;
+    if (!newDevice) return; // TODO: add handling for this
 
     setDeviceList([...deviceList, newDevice]);
   };
 
   const editDevice = async (body: PatchDeviceBody) => {
     const updatedDevice = await patchDevice(body);
-    if (!updatedDevice) return;
+    if (!updatedDevice) return; // TODO: add handling for this
 
     const filteredDeviceList = deviceList.filter((device) => device.device_id !== body.device_id);
     setDeviceList([...filteredDeviceList, updatedDevice]);
