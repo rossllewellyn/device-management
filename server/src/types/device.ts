@@ -22,6 +22,7 @@ export const baseDevice = T.Object({
   device_settings_json: T.Optional(deviceSettingsJson),
   device_projects_json: T.Optional(deviceProjectsJson),
   app_identifier: T.Optional(T.String()),
+  app_version: T.Optional(T.String()),
 });
 export type NewDevice = Static<typeof baseDevice>;
 
