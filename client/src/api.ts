@@ -12,6 +12,10 @@ import {
   PatchDeviceBody,
   PatchDeviceResponse,
 } from "../../server/src/routes/devices/types/patch-device-types";
+import {
+  DeleteDeviceBody,
+  DeleteDeviceResponse,
+} from "../../server/src/routes/devices/types/delete-device-types";
 
 const baseURL = "http://localhost:3100";
 
@@ -57,5 +61,13 @@ export const patchDevice = async (body: PatchDeviceBody) => {
   const method = "PATCH";
 
   const response: PatchDeviceResponse = await fetchFactory(url, method, body);
+  return response;
+};
+
+export const deleteDevice = async (body: DeleteDeviceBody) => {
+  const url = `${baseURL}/devices`;
+  const method = "DELETE";
+
+  const response: DeleteDeviceResponse = await fetchFactory(url, method, body);
   return response;
 };
