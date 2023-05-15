@@ -1,3 +1,4 @@
+import styles from "./page.module.css";
 import { ChangeEvent, useState } from "react";
 import { PostDeviceResponse } from "../../../server/src/routes/devices/types/post-device-types";
 import { AppMode } from "./page";
@@ -21,7 +22,7 @@ const EditDeviceForm = ({
   };
 
   return (
-    <form>
+    <form className={styles.form}>
       <label>
         Brand:
         <input
@@ -87,20 +88,22 @@ const EditDeviceForm = ({
           onChange={handleChange}
         />
       </label>
-      <button
-        type="submit"
-        onClick={() => {
-          // these are batched together
-          setAppMode(AppMode.VIEWING);
-          editDevice({
-            ...device,
-            ...formData,
-          });
-        }}
-      >
-        Save
-      </button>
-      <button onClick={() => setAppMode(AppMode.VIEWING)}>Cancel</button>
+      <div className={styles.buttoncontainer}>
+        <button
+          type="submit"
+          onClick={() => {
+            // these are batched together
+            setAppMode(AppMode.VIEWING);
+            editDevice({
+              ...device,
+              ...formData,
+            });
+          }}
+        >
+          Save
+        </button>
+        <button onClick={() => setAppMode(AppMode.VIEWING)}>Cancel</button>
+      </div>
     </form>
   );
 };

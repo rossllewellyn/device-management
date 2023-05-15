@@ -1,3 +1,4 @@
+import styles from "./page.module.css";
 import { ChangeEvent, useState } from "react";
 import { AppMode } from "./page";
 
@@ -18,7 +19,7 @@ const AddDeviceForm = ({
   };
 
   return (
-    <form>
+    <form className={styles.form}>
       <label>
         Device Id:
         <input name="device_id" onChange={handleFormChange} />
@@ -54,19 +55,21 @@ const AddDeviceForm = ({
         App Version:
         <input name="app_version" onChange={handleFormChange} />
       </label>
-      <button
-        type="submit"
-        onClick={() => {
-          // these are batched together
-          setAppMode(AppMode.VIEWING);
-          addDevice({
-            ...formData,
-          });
-        }}
-      >
-        Save
-      </button>
-      <button onClick={() => setAppMode(AppMode.VIEWING)}>Cancel</button>
+      <div className={styles.buttoncontainer}>
+        <button
+          type="submit"
+          onClick={() => {
+            // these are batched together
+            setAppMode(AppMode.VIEWING);
+            addDevice({
+              ...formData,
+            });
+          }}
+        >
+          Save
+        </button>
+        <button onClick={() => setAppMode(AppMode.VIEWING)}>Cancel</button>
+      </div>
     </form>
   );
 };
