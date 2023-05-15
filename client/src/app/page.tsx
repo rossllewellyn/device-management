@@ -68,25 +68,32 @@ export default function Home() {
             <button onClick={() => getDevices()}>Search</button>
           </div>
 
-          {deviceList.map((device) => {
-            return (
-              <div className={styles.device}>
-                <h3>Brand: {device.device_make}</h3>
-                <h3>Model: {device.device_model}</h3>
-                <h3>OS: {device.device_os_version}</h3>
-                <button onClick={() => removeDevice(device.device_id)}>Remove</button>
-                <button
-                  onClick={() => {
-                    // these are batched together
-                    setAppMode(AppMode.EDITING);
-                    setDeviceToEdit(device);
-                  }}
-                >
-                  Edit Device
-                </button>
-              </div>
-            );
-          })}
+          {deviceList
+            .sort((a, b) => {
+              const osA = a.device_os_version?.toUpperCase() || "";
+              const osB = b.device_os_version?.toUpperCase() || "";
+
+              return osA < osB ? -1 : 0;
+            })
+            .map((device) => {
+              return (
+                <div className={styles.device}>
+                  <h3>Brand: {device.device_make}</h3>
+                  <h3>Model: {device.device_model}</h3>
+                  <h3>OS: {device.device_os_version}</h3>
+                  <button onClick={() => removeDevice(device.device_id)}>Remove</button>
+                  <button
+                    onClick={() => {
+                      // these are batched together
+                      setAppMode(AppMode.EDITING);
+                      setDeviceToEdit(device);
+                    }}
+                  >
+                    Edit Device
+                  </button>
+                </div>
+              );
+            })}
         </div>
       )}
       {appMode === AppMode.EDITING && deviceToEdit && (
