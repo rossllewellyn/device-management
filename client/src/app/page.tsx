@@ -40,7 +40,13 @@ export default function Home() {
           </div>
 
           {deviceList.map((device) => {
-            return <></>;
+            return (
+              <div className={styles.device}>
+                <h3>Brand: {device.device_make}</h3>
+                <h3>Model: {device.device_model}</h3>
+                <h3>OS: {device.device_os_version}</h3>
+              </div>
+            );
           })}
         </div>
       )}
