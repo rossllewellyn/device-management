@@ -4,7 +4,7 @@ import { useState } from "react";
 import styles from "./page.module.css";
 import EditDeviceForm from "./edit-device-form";
 import AddDeviceForm from "./add-device-form";
-import { postDeviceQuery } from "@/api";
+import { deleteDevice, postDeviceQuery } from "@/api";
 import { PostDeviceQueryResponse } from "../../../server/src/routes/devices/types/post-device-query-types";
 
 enum AppMode {
@@ -22,6 +22,14 @@ export default function Home() {
     const devices = await postDeviceQuery({ search_text: searchText });
     if (!devices) return; // TODO: add handling for this
     setDeviceList(devices);
+  };
+
+  const removeDevice = async (deviceId: string) => {
+    const deletedDevice = await deleteDevice({ device_id: deviceId });
+    if (!deletedDevice) return; // TODO: add handling for this
+
+    const filteredDeviceList = deviceList.filter((device) => device.device_id !== deviceId);
+    setDeviceList([...filteredDeviceList]);
   };
 
   return (
@@ -45,6 +53,7 @@ export default function Home() {
                 <h3>Brand: {device.device_make}</h3>
                 <h3>Model: {device.device_model}</h3>
                 <h3>OS: {device.device_os_version}</h3>
+                <button onClick={() => removeDevice(device.device_id)}>Remove</button>
               </div>
             );
           })}
