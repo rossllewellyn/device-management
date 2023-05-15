@@ -1,0 +1,27 @@
+version: "3"
+services:
+  client:
+    build:
+      context: ./client
+    # environment:
+    #   - REACT_APP_PORT=3000
+    expose:
+      - "3000"
+    ports:
+      - 3000:3000
+  server:
+    build:
+      context: ./server
+    environment:
+      DATABASE_URL: postgresql://testuser:testuser@localhost/device-management
+    expose:
+      - "3100"
+    ports:
+      - 3100:3100
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testuser
+      POSTGRES_DB: device-management
+      POSTGRES_HOST: localhost
