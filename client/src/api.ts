@@ -4,6 +4,10 @@ import {
   PostDeviceQueryBody,
   PostDeviceQueryResponse,
 } from "../../server/src/routes/devices/types/post-device-query-types";
+import {
+  PostDeviceBody,
+  PostDeviceResponse,
+} from "../../server/src/routes/devices/types/post-device-types";
 
 const baseURL = "http://localhost:3100";
 
@@ -33,5 +37,13 @@ export const postDeviceQuery = async (body: PostDeviceQueryBody) => {
   const method = "POST";
 
   const response: PostDeviceQueryResponse = await fetchFactory(url, method, body);
+  return response;
+};
+
+export const postDevice = async (body: PostDeviceBody) => {
+  const url = `${baseURL}/devices`;
+  const method = "POST";
+
+  const response: PostDeviceResponse = await fetchFactory(url, method, body);
   return response;
 };
