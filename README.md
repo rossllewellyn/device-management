@@ -84,4 +84,5 @@ Backend:
 - Improve search (e.g. separate query params)
 - Paginate search results
 - Omit unnecessary fields returned from db with projection
+- Force consistent casing to improve search (e.g. .toUpperCase())
 - Tests
