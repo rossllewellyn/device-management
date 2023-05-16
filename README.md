@@ -46,6 +46,8 @@ node.js, npm, postgres, docker
 
 ## Docker Setup & Run
 
+- Run the docker daemon (e.g. Docker Desktop)
+
 - Build & run the db, server, and client containers
 
   `cd ./server` then `docker-compose up`
