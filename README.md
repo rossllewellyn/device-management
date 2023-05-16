@@ -2,44 +2,76 @@
 
 Monorepo for the Device Management application.
 
-Next.js frontend, Node.js with Fastify backend, PostgreSQL with Prisma database.
+Next.js frontend, Node.js with Fastify backend, PostgreSQL database with Prisma ORM.
 
 ## Requirements
 
-node.js, npm, postgres
+node.js, npm, postgres, docker
+
+## Viewing Devices
+
+![Viewing Devices](/readme-images/view-devices.png)
+
+## Adding a Device
+
+![Add a Device](/readme-images/add-device.png)
 
 ## Local Setup
 
-- Clone this repository, install dependancies in the client & server repositories & set up prisma:
-  `cd ./server` && `npm i`
+- Clone this repository
 
-  `cd ./client` && `npm i`
+- Install dependancies in client & server directories
 
-- Add a .env file in ./server for your local postgres, for example:
+  `cd ./server` then `npm i`
 
-`DATABASE_URL=postgresql://testuser:testuser@localhost/device-management`
+  `cd ./client` then `npm i`
+
+- Amend the values in the .env file in ./server for your local postgres
 
 - Generate the prisma schema
 
-`npm run generate`
+  `npm run generate`
 
 ## Running Locally
 
-- Running the frontend:
-  `cd ./client` && `npm run dev`
+- Run the Node.js RESTful API
 
-- Running the backend:
-  `cd ./server` && `npm run start`
+  `cd ./server` then `npm run start`
+
+- Run the Next.js frontend application
+
+  `cd ./client` then `npm run dev`
+
+- Navigate to `localhost:3000`
+
+## Running with Docker
+
+- Build & run the db, server, and client containers
+
+  `cd ./server` then `docker-compose up`
 
 - Navigate to `localhost:3000`
 
 ## Futher Improvements:
 
-- Add validation & better error handling
-- Fix dockerisation
-- Improve frontend styling
-- Add dynamic routes to frontend for device_id path
-- Add state management
-- Add release date to prisma schema & datepicker on frontend
-- Make brand and model mandatory fields
+General:
+
+- Authentication & authorisation (e.g JWT)
+- Optimise containerisation (Dockerfile & docker-compose)
+- Improve/automate development/containerised environments
+
+Frontend:
+
+- Improve search (e.g. by multiple fields)
+- Validation & better error handling
+- Dynamic routes (e.g. device_id path)
+- State management like Redux
+- Accessibility
+- Reponsiveness
+- Tests
+
+Backend:
+
+- Add config for ENV variable loading
+- Improve search (e.g. separate query params)
 - Tests
