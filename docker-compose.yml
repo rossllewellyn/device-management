@@ -1,27 +1,23 @@
-version: "3"
+version: "3.8"
 services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    restart: always
+  server:
+    depends_on:
+      - db
+    build:
+      context: ./server
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    restart: always
   client:
     build:
       context: ./client
-    # environment:
-    #   - REACT_APP_PORT=3000
-    expose:
-      - "3000"
     ports:
-      - 3000:3000
-  server:
-    build:
-      context: ./server
-    environment:
-      DATABASE_URL: postgresql://testuser:testuser@localhost/device-management
-    expose:
-      - "3100"
-    ports:
-      - 3100:3100
-  db:
-    image: postgres
-    environment:
-      POSTGRES_USER: testuser
-      POSTGRES_PASSWORD: testuser
-      POSTGRES_DB: device-management
-      POSTGRES_HOST: localhost
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    restart: always

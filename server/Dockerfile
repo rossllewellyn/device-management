@@ -1,15 +1,19 @@
-FROM node:latest
+FROM node:18-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
+COPY prisma ./prisma/h
 
 RUN npm install
 
 COPY . .
 
-RUN npx prisma generate
+RUN npm run generate
 
-EXPOSE 3100
+ENV NODE_ENV production
+ENV PORT ${SERVER_PORT}
 
-CMD ["npm", "start"]
+EXPOSE ${SERVER_PORT}
+
+CMD ["npm", "run", "start:migrate"]
