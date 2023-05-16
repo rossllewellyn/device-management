@@ -5,24 +5,15 @@ import styles from "./page.module.css";
 import EditDeviceForm from "./edit-device-form";
 import AddDeviceForm from "./add-device-form";
 import { deleteDevice, postDeviceQuery, postDevice, patchDevice } from "@/api";
-import { PostDeviceQueryResponse } from "../../../server/src/routes/devices/types/post-device-query-types";
-import {
-  PostDeviceBody,
-  PostDeviceResponse,
-} from "../../../server/src/routes/devices/types/post-device-types";
-import { PatchDeviceBody } from "../../../server/src/routes/devices/types/patch-device-types";
+import dayjs from "dayjs";
 
-export enum AppMode {
-  VIEWING,
-  EDITING,
-  ADDING,
-}
+import { AppMode, NewDevice, FullDevice } from "@/types";
 
 export default function Home() {
   const [appMode, setAppMode] = useState<AppMode>(AppMode.VIEWING);
   const [searchText, setSearchText] = useState<string>("");
-  const [deviceList, setDeviceList] = useState<PostDeviceQueryResponse>([]);
-  const [deviceToEdit, setDeviceToEdit] = useState<PostDeviceResponse | undefined>(undefined);
+  const [deviceList, setDeviceList] = useState<FullDevice[]>([]);
+  const [deviceToEdit, setDeviceToEdit] = useState<FullDevice | undefined>(undefined);
 
   const getDevices = async () => {
     const devices = await postDeviceQuery({ search_text: searchText });
@@ -30,14 +21,14 @@ export default function Home() {
     setDeviceList(devices);
   };
 
-  const addDevice = async (body: PostDeviceBody) => {
+  const addDevice = async (body: NewDevice) => {
     const newDevice = await postDevice(body);
     if (!newDevice) return; // TODO: add handling for this
 
     setDeviceList([...deviceList, newDevice]);
   };
 
-  const editDevice = async (body: PatchDeviceBody) => {
+  const editDevice = async (body: FullDevice) => {
     const updatedDevice = await patchDevice(body);
     if (!updatedDevice) return; // TODO: add handling for this
 
@@ -82,7 +73,12 @@ export default function Home() {
                   <div className={styles.device}>
                     <h3>Brand: {device.device_make}</h3>
                     <h3>Model: {device.device_model}</h3>
-                    <h3>OS: {device.device_os_version}</h3>
+                    {device.device_os_version && <h3>OS: {device.device_os_version}</h3>}
+                    {device.device_release_date && (
+                      <h3>
+                        Release Date: {dayjs(device.device_release_date).format("DD/MM/YYYY")}
+                      </h3>
+                    )}
                     <div className={styles.buttoncontainer}>
                       <button onClick={() => removeDevice(device.device_id)}>Remove</button>
                       <button
