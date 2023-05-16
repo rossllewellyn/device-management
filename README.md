@@ -16,6 +16,18 @@ node.js, npm, postgres, docker
 
 ![Add a Device](/readme-images/add-device.png)
 
+## Docker Setup & Running (recommended)
+
+- Clone this repository
+
+- Run the docker daemon (e.g. Docker Desktop)
+
+- Build & run the db, server, and client containers
+
+  `cd ./server` then `docker-compose up`
+
+- Navigate to `localhost:3000`
+
 ## Local Setup
 
 - Clone this repository
@@ -41,16 +53,6 @@ node.js, npm, postgres, docker
 - Run the Next.js frontend application
 
   `cd ./client` then `npm run dev`
-
-- Navigate to `localhost:3000`
-
-## Docker Setup & Run
-
-- Run the docker daemon (e.g. Docker Desktop)
-
-- Build & run the db, server, and client containers
-
-  `cd ./server` then `docker-compose up`
 
 - Navigate to `localhost:3000`
 
