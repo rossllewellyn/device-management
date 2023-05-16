@@ -44,7 +44,7 @@ node.js, npm, postgres, docker
 
 - Navigate to `localhost:3000`
 
-## Running with Docker
+## Docker Setup & Run
 
 - Build & run the db, server, and client containers
 
