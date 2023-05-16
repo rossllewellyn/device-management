@@ -1,23 +1,11 @@
 "use server";
 
-import {
-  PostDeviceQueryBody,
-  PostDeviceQueryResponse,
-} from "../../server/src/routes/devices/types/post-device-query-types";
-import {
-  PostDeviceBody,
-  PostDeviceResponse,
-} from "../../server/src/routes/devices/types/post-device-types";
-import {
-  PatchDeviceBody,
-  PatchDeviceResponse,
-} from "../../server/src/routes/devices/types/patch-device-types";
-import {
-  DeleteDeviceBody,
-  DeleteDeviceResponse,
-} from "../../server/src/routes/devices/types/delete-device-types";
+import { NewDevice, FullDevice } from "./types";
 
-const baseURL = "http://localhost:3100";
+const port = process.env.SERVER_PORT || 3100;
+const hostname = process.env.NODE_ENV === "production" ? "server" : "localhost";
+
+const baseURL = `http://${hostname}:${port}`;
 
 const fetchFactory = async (url: string, method: string, body: any) => {
   try {
@@ -40,34 +28,34 @@ const fetchFactory = async (url: string, method: string, body: any) => {
   }
 };
 
-export const postDeviceQuery = async (body: PostDeviceQueryBody) => {
+export const postDeviceQuery = async (body: { search_text: string }) => {
   const url = `${baseURL}/devices/query`;
   const method = "POST";
 
-  const response: PostDeviceQueryResponse = await fetchFactory(url, method, body);
+  const response: FullDevice[] = await fetchFactory(url, method, body);
   return response;
 };
 
-export const postDevice = async (body: PostDeviceBody) => {
+export const postDevice = async (body: NewDevice) => {
   const url = `${baseURL}/devices`;
   const method = "POST";
 
-  const response: PostDeviceResponse = await fetchFactory(url, method, body);
+  const response: FullDevice = await fetchFactory(url, method, body);
   return response;
 };
 
-export const patchDevice = async (body: PatchDeviceBody) => {
+export const patchDevice = async (body: NewDevice) => {
   const url = `${baseURL}/devices`;
   const method = "PATCH";
 
-  const response: PatchDeviceResponse = await fetchFactory(url, method, body);
+  const response: FullDevice = await fetchFactory(url, method, body);
   return response;
 };
 
-export const deleteDevice = async (body: DeleteDeviceBody) => {
+export const deleteDevice = async (body: { device_id: string }) => {
   const url = `${baseURL}/devices`;
   const method = "DELETE";
 
-  const response: DeleteDeviceResponse = await fetchFactory(url, method, body);
+  const response: FullDevice = await fetchFactory(url, method, body);
   return response;
 };
