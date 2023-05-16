@@ -72,10 +72,16 @@ Frontend:
 - State management like Redux
 - Accessibility
 - Reponsiveness
+- Clear date field on edit
+- Fix edit/add form submission on enter key
+- Fix editing when no changes made
+- Sanitise user input
 - Tests
 
 Backend:
 
 - Add config for ENV variable loading
 - Improve search (e.g. separate query params)
+- Paginate search results
+- Omit unnecessary fields returned from db with projection
 - Tests
