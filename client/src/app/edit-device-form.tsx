@@ -1,20 +1,21 @@
 import styles from "./page.module.css";
 import { ChangeEvent, useState } from "react";
-import { PostDeviceResponse } from "../../../server/src/routes/devices/types/post-device-types";
-import { AppMode } from "./page";
+import { AppMode, FullDevice } from "@/types";
+import dayjs from "dayjs";
 
 const EditDeviceForm = ({
   device,
   editDevice,
   setAppMode,
 }: {
-  device: PostDeviceResponse;
+  device: FullDevice;
   editDevice: Function;
   setAppMode: Function;
 }) => {
   const [formData, setFormData] = useState({});
+  const [releaseDate, setReleaseDate] = useState<Date>();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleFormChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -24,21 +25,21 @@ const EditDeviceForm = ({
   return (
     <form className={styles.form}>
       <label>
-        Brand:
+        *Brand:
         <input
           type="text"
           name="device_make"
           defaultValue={device.device_make}
-          onChange={handleChange}
+          onChange={handleFormChange}
         />
       </label>
       <label>
-        Model:
+        *Model:
         <input
           type="text"
           name="device_model"
           defaultValue={device.device_model}
-          onChange={handleChange}
+          onChange={handleFormChange}
         />
       </label>
       <label>
@@ -47,27 +48,16 @@ const EditDeviceForm = ({
           type="text"
           name="device_os_version"
           defaultValue={device.device_os_version}
-          onChange={handleChange}
+          onChange={handleFormChange}
         />
       </label>
-      <label>Status Code:</label>
-      <select
-        name="device_status_code"
-        defaultValue={device.device_status_code}
-        onChange={handleChange}
-      >
-        <option value="NEW">NEW</option>
-        <option value="USED">USED</option>
-        <option value="REFURBISHED">REFURBISHED</option>
-        <option value="BROKEN">BROKEN</option>
-      </select>
       <label>
         Tenant Id:
         <input
           type="text"
           name="tenant_id"
           defaultValue={device.tenant_id}
-          onChange={handleChange}
+          onChange={handleFormChange}
         />
       </label>
       <label>
@@ -76,7 +66,7 @@ const EditDeviceForm = ({
           type="text"
           name="app_identifier"
           defaultValue={device.app_identifier}
-          onChange={handleChange}
+          onChange={handleFormChange}
         />
       </label>
       <label>
@@ -85,18 +75,49 @@ const EditDeviceForm = ({
           type="text"
           name="app_version"
           defaultValue={device.app_version}
-          onChange={handleChange}
+          onChange={handleFormChange}
         />
       </label>
+      <label>
+        Release Date:
+        <input
+          type="date"
+          name="device_release_date"
+          defaultValue={
+            device.device_release_date
+              ? dayjs(device.device_release_date).format("YYYY-MM-DD")
+              : undefined
+          }
+          onChange={(e) => setReleaseDate(new Date(e.target.value))}
+        />
+      </label>
+      <label>
+        Status Code:
+        <select
+          name="device_status_code"
+          defaultValue={device.device_status_code}
+          onChange={handleFormChange}
+        >
+          <option value="NEW">NEW</option>
+          <option value="USED">USED</option>
+          <option value="REFURBISHED">REFURBISHED</option>
+          <option value="BROKEN">BROKEN</option>
+        </select>
+      </label>
+      {/** janky label to format grid nicer */}
+      <label />
       <div className={styles.buttoncontainer}>
         <button
           type="submit"
           onClick={() => {
+            // don't reset device updated
+            const { last_updated_datetime, ...deviceObj } = device;
             // these are batched together
             setAppMode(AppMode.VIEWING);
             editDevice({
-              ...device,
+              ...deviceObj,
               ...formData,
+              device_release_date: releaseDate?.toISOString(),
             });
           }}
         >
